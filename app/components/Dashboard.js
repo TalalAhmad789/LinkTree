@@ -54,7 +54,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     getLinks();
-  }, [session, router])
+  }, [])
 
 
   const handleImageChange = (e) => {
