@@ -1,7 +1,6 @@
 "use client"
 
 import React, { useEffect, useState } from 'react'
-import Image from 'next/image'
 import { useSession, signIn, signOut } from "next-auth/react"
 import { usePathname } from 'next/navigation'
 import { useRouter } from 'next/navigation'
@@ -65,7 +64,7 @@ const Navbar = () => {
                 {!session ? null : (
                     <div className='relative inline-block' onBlur={() => setTimeout(() => setDrop(false), 200)} tabIndex={0}>
                         <img
-                            src='https://cdn-icons-png.flaticon.com/512/219/219983.png'
+                            src='/user.jpg'
                             alt='iii'
                             onClick={() => setDrop(!drop)}
                             className='w-10 p-0 cursor-pointer hover:scale-105 rounded-full transition-all duration-200 ease-in'

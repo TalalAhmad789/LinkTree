@@ -15,7 +15,7 @@ const page = () => {
     }, [session, router])
 
     return (
-        <div className="min-h-screen bg-gray-50 px-6 py-10 text-gray-800 max-w-3xl mx-auto">
+        <div className="min-h-screen bg-gray-50 px-6 py-10 text-gray-800  mx-auto">
             <h1 className="text-3xl font-bold text-indigo-600 mb-8">Help & Support</h1>
 
             <section className="mb-10">

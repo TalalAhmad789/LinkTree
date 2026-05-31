@@ -3,18 +3,28 @@
 import Image from 'next/image';
 import { useSession, signIn } from "next-auth/react"
 import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
-
+import { useEffect, useState } from 'react';
+import Loading from '../loading';
 
 export default function Page() {
     const router = useRouter();
+    const [isAuthenticating, setIsAuthenticating] = useState(false);
     const { data: session, status } = useSession()
     useEffect(() => {
         if (session) {
             router.push(`dashboard/${session?.user?.name}`);
         }
     }, [session, router])
+    if (status === 'loading' || isAuthenticating) {
+        return (
+            <Loading />
+        );
+    }
 
+    const handleProvider = async (provider) => {
+        setIsAuthenticating(true);
+        await signIn(provider)
+    }
     return (
         <>
             <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
@@ -25,12 +35,12 @@ export default function Page() {
                     </div>
 
                     <div className="flex flex-col sm:flex-row gap-3 mt-8">
-                        <button onClick={()=> signIn('google')} className="flex-1 flex items-center justify-center gap-2 border border-gray-300 py-2 rounded-lg hover:bg-gray-100 transition text-sm font-bold text-gray-600 cursor-pointer">
+                        <button onClick={() => handleProvider('google')} className="flex-1 flex items-center justify-center gap-2 border border-gray-300 py-2 rounded-lg hover:bg-gray-100 transition text-sm font-bold text-gray-600 cursor-pointer">
                             <img width={20} height={20} src="/google.svg" alt="google" />
                             <div>Google</div>
                         </button>
 
-                        <button onClick={()=> signIn('google')} className="flex-1 flex items-center justify-center gap-2 border border-gray-300 py-2 rounded-lg hover:bg-gray-100 transition text-sm font-bold text-gray-600 cursor-pointer">
+                        <button onClick={() => handleProvider('github')} className="flex-1 flex items-center justify-center gap-2 border border-gray-300 py-2 rounded-lg hover:bg-gray-100 transition text-sm font-bold text-gray-600 cursor-pointer">
                             <img width={20} height={20} src="/github.svg" alt="github" />
                             <div>GitHub</div>
                         </button>
@@ -46,7 +56,7 @@ export default function Page() {
                             <label className="block text-sm font-medium text-gray-700 mb-1">Email address</label>
                             <input
                                 type="email"
-                                className="w-full border border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black"
+                                className="w-full border text-gray-800 border-gray-300 rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black"
                                 placeholder="you@example.com"
                             />
                         </div>
