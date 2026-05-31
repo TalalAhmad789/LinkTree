@@ -23,6 +23,9 @@ const Navbar = () => {
     }
 
     useEffect(() => {
+        if (!session) {
+            router.push('/')
+        }
         if (status === "authenticated") {
             getData()
         }
